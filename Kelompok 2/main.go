@@ -44,12 +44,12 @@ type Forum struct {
 }
 
 type StudentAnswer struct {
-	ID          int   
-	TaskID      int    
-	StudentName string 
-	Answer      string 
-	Graded      bool   
-	Grade       string 
+	ID          int
+	TaskID      int
+	StudentName string
+	Answer      string
+	Graded      bool
+	Grade       string
 }
 
 var studentAnswers []StudentAnswer
@@ -543,7 +543,6 @@ func ikutiForum(reader *bufio.Reader) {
 	for i, forum := range lmsData.Forums {
 		if forum.ID == forumID {
 			fmt.Printf("Mengakses forum: %s\n", forum.Topic)
-			fmt.Println("Post sebelumnya:")
 			for _, post := range forum.Posts {
 				fmt.Printf("- %s\n", post)
 			}
@@ -743,7 +742,7 @@ func loadData() {
 	file, err := os.Open(dataFile)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return 
+			return
 		}
 		fmt.Println("Gagal membuka file data:", err)
 		return
