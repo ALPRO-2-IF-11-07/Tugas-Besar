@@ -1,0 +1,36 @@
+{
+    "courses": [
+      {
+        "ID": 1,
+        "Title": "Matematika Dasar",
+        "Description": "Belajar dasar-dasar matematika."
+      }
+    ],
+    "tasks": [
+  {
+    "ID": 1,
+    "CourseID": 1,
+    "Title": "Tugas Pertama",
+    "Description": "Kerjakan soal di halaman 10.",
+    "Submission": ""
+  }
+    ],
+    "quizzes": [
+      {
+        "ID": 1,
+        "CourseID": 1,
+        "Title": "Quiz Matematika",
+        "Questions": ["Apa hasil dari 2+2?", "Apa itu bilangan prima?"]
+      }
+    ],
+    "forums": [
+        {
+            "ID": 1,
+            "CourseID": 1,
+            "Topic": "Alogoritma Pemrograman",
+            "Description": "Jelaskan bagaimana Anda mendefinisikan tentang Algoritma Pemrograman.",
+            "Posts": []
+        }
+    ]
+}
+  
