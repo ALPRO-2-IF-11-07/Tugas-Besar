@@ -44,12 +44,12 @@ type Forum struct {
 }
 
 type StudentAnswer struct {
-	ID          int    // ID unik jawaban
-	TaskID      int    // ID tugas terkait
-	StudentName string // Nama mahasiswa
-	Answer      string // Jawaban mahasiswa
-	Graded      bool   // Status apakah sudah dinilai
-	Grade       string // Nilai yang diberikan dosen
+	ID          int   
+	TaskID      int    
+	StudentName string 
+	Answer      string 
+	Graded      bool   
+	Grade       string 
 }
 
 var studentAnswers []StudentAnswer
@@ -108,7 +108,6 @@ func main() {
 			continue
 		}
 
-		// Login
 		fmt.Print("Masukkan username: ")
 		username, _ := reader.ReadString('\n')
 		username = strings.TrimSpace(username)
@@ -117,7 +116,6 @@ func main() {
 		password, _ := reader.ReadString('\n')
 		password = strings.TrimSpace(password)
 
-		// Autentikasi
 		user := authenticate(username, password, role)
 		if user == nil {
 			fmt.Println("\n====================================")
@@ -130,7 +128,6 @@ func main() {
 		fmt.Printf("Login berhasil sebagai %s (%s)\n", user.Username, user.Role)
 		fmt.Println("====================================")
 
-		// Menu berdasarkan role
 		if user.Role == "dosen" {
 			dosenMenu(reader)
 		} else if user.Role == "mahasiswa" {
@@ -408,8 +405,6 @@ func beriNilai(reader *bufio.Reader) {
 		fmt.Println("Input tidak valid. Harap masukkan angka.")
 		return
 	}
-
-	// Membersihkan buffer setelah fmt.Scan
 	reader.ReadString('\n')
 
 	for i, answer := range studentAnswers {
@@ -471,7 +466,6 @@ func kerjakanTugas(reader *bufio.Reader, student *User) {
 	var taskID int
 	fmt.Scan(&taskID)
 
-	// Buang karakter newline yang tersisa di buffer
 	reader.ReadString('\n')
 
 	for _, task := range lmsData.Tasks {
@@ -481,7 +475,6 @@ func kerjakanTugas(reader *bufio.Reader, student *User) {
 			answer, _ := reader.ReadString('\n')
 			answer = strings.TrimSpace(answer)
 
-			// Simpan jawaban
 			studentAnswers = append(studentAnswers, StudentAnswer{
 				ID:          nextAnswerID,
 				TaskID:      taskID,
@@ -519,7 +512,6 @@ func kerjakanQuiz(reader *bufio.Reader, student *User) {
 				answers += fmt.Sprintf("Q%d: %s\n", i+1, strings.TrimSpace(answer))
 			}
 
-			// Simpan jawaban quiz
 			studentAnswers = append(studentAnswers, StudentAnswer{
 				ID:          nextAnswerID,
 				TaskID:      quizID,
@@ -546,7 +538,6 @@ func ikutiForum(reader *bufio.Reader) {
 	var forumID int
 	fmt.Scan(&forumID)
 
-	// Membersihkan buffer untuk menghindari sisa karakter
 	reader.ReadString('\n')
 
 	for i, forum := range lmsData.Forums {
@@ -557,15 +548,12 @@ func ikutiForum(reader *bufio.Reader) {
 				fmt.Printf("- %s\n", post)
 			}
 
-			// Tambahkan post baru
 			fmt.Print("Masukkan post baru: ")
 			newPost, _ := reader.ReadString('\n')
 			newPost = strings.TrimSpace(newPost)
 			lmsData.Forums[i].Posts = append(lmsData.Forums[i].Posts, newPost)
 
 			fmt.Println("Post berhasil ditambahkan ke forum.")
-
-			// Simpan perubahan ke file
 			saveData()
 
 			fmt.Println("Loading......")
@@ -723,24 +711,20 @@ func tambahForum(reader *bufio.Reader) {
 	fmt.Println("           Tambah Forum Diskusi")
 	fmt.Println("====================================")
 
-	// Meminta ID course
 	fmt.Print("Masukkan ID course untuk forum ini: ")
 	idInput, _ := reader.ReadString('\n')
 	idInput = strings.TrimSpace(idInput)
 	var courseID int
 	fmt.Sscanf(idInput, "%d", &courseID)
 
-	// Meminta topik forum
 	fmt.Print("Masukkan topik forum: ")
 	topic, _ := reader.ReadString('\n')
 	topic = strings.TrimSpace(topic)
 
-	// Meminta deskripsi forum
 	fmt.Print("Masukkan deskripsi forum: ")
 	description, _ := reader.ReadString('\n')
 	description = strings.TrimSpace(description)
 
-	// Membuat forum baru
 	forum := Forum{
 		ID:          nextForumID,
 		CourseID:    courseID,
@@ -749,7 +733,6 @@ func tambahForum(reader *bufio.Reader) {
 		Posts:       []string{},
 	}
 
-	// Menyimpan forum ke data
 	lmsData.Forums = append(lmsData.Forums, forum)
 	nextForumID++
 	fmt.Println("\nForum diskusi berhasil ditambahkan.")
@@ -760,7 +743,7 @@ func loadData() {
 	file, err := os.Open(dataFile)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return // Jika file tidak ada, abaikan
+			return 
 		}
 		fmt.Println("Gagal membuka file data:", err)
 		return
